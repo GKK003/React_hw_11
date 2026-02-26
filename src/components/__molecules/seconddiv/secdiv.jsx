@@ -206,6 +206,10 @@ const WhiteDiv = styled.div`
   left: 0;
   padding: 100px;
   border-radius: 10px;
+
+  @media (max-width: 500px) {
+    height: 500px;
+  }
 `;
 
 function SecondDiv() {
