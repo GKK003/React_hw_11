@@ -108,6 +108,7 @@ const HelloTxt = styled.h1`
   letter-spacing: 4px;
   vertical-align: bottom;
   text-transform: uppercase;
+  color: white;
 `;
 
 const Hour = styled.p`
@@ -116,6 +117,7 @@ const Hour = styled.p`
   line-height: 100%;
   letter-spacing: -5px;
   vertical-align: bottom;
+  color: white;
 
   @media (max-width: 900px) {
     font-size: 160px;
@@ -132,6 +134,7 @@ const BST = styled.span`
   line-height: 28px;
   letter-spacing: 0px;
   text-transform: uppercase;
+  color: white;
 `;
 
 const Location = styled.p`
