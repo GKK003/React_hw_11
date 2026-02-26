@@ -81,6 +81,10 @@ const Flex = styled.div`
   align-items: start;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 480px) {
+    gap: 30px;
+  }
 `;
 
 const HelloDiv = styled.div`
@@ -126,15 +130,6 @@ const Hour = styled.p`
   @media (max-width: 490px) {
     font-size: 100px;
   }
-`;
-
-const BST = styled.span`
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 28px;
-  letter-spacing: 0px;
-  text-transform: uppercase;
-  color: white;
 `;
 
 const Location = styled.p`
@@ -198,17 +193,143 @@ const Aimg = styled.img`
 const WhiteDiv = styled.div`
   width: 100%;
   height: 330px;
-  background: white;
-  opacity: 0.75;
-  backdrop-filter: blur(40.77px);
   position: absolute;
   top: 55%;
   left: 0;
   padding: 100px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15%;
 
   @media (max-width: 500px) {
     height: 100%-50%;
+    flex-direction: column;
+  }
+`;
+
+const LeftDiv = styled.div`
+  max-width: 423px;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20%;
+  @media (max-width: 500px) {
+    height: auto;
+  }
+`;
+
+const CurrentDiv = styled.div`
+  max-width: 423px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 500px) {
+    flex-direction: row;
+    max-width: 323px;
+    justify-content: space-between;
+  }
+`;
+
+const Header = styled.p`
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 28px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  @media (max-width: 900px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 10px;
+  }
+`;
+
+const Content = styled.h1`
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 100%;
+  letter-spacing: 0px;
+
+  @media (max-width: 900px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
+`;
+
+const DayDiv = styled.div`
+  max-width: 176px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 15px;
+
+  @media (max-width: 500px) {
+    flex-direction: row;
+    max-width: 323px;
+    justify-content: space-between;
+  }
+`;
+
+const RightDiv = styled.div`
+  max-width: 423px;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20%;
+
+  @media (max-width: 500px) {
+    height: auto;
+  }
+`;
+
+const WeekDiv = styled.div`
+  max-width: 179px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 15px;
+
+  @media (max-width: 500px) {
+    flex-direction: row;
+    max-width: 323px;
+    justify-content: space-between;
+  }
+`;
+
+const WeekNumDiv = styled.div`
+  max-width: 160px;
+  width: 100%;
+  gap: 15px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+
+  @media (max-width: 500px) {
+    flex-direction: row;
+    max-width: 323px;
+    justify-content: space-between;
   }
 `;
 
@@ -234,6 +355,13 @@ function SecondDiv() {
     Star = Moon;
   }
 
+  const Divcolor =
+    hour >= 6 && hour < 18
+      ? "rgba(255, 255, 255, 0.75)"
+      : "rgba(0, 0, 0, 0.75)";
+
+  const Textcolor = hour >= 6 && hour < 18 ? "#303030" : "#FFFFF";
+
   const [rotated, setRotated] = useState(false);
   const [display, setDisplay] = useState(true);
 
@@ -242,8 +370,34 @@ function SecondDiv() {
     setDisplay(!display);
   };
 
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const city = timeZone.split("/")[1]?.replace("_", " ") || "Unknown";
+  const timeZoneRaw = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const timezone =
+    timeZoneRaw === "Asia/Tbilisi" ? "Europe/Tbilisi" : timeZoneRaw;
+
+  const city = timezone.split("/")[1]?.replace("_", " ") || "Unknown";
+
+  const now = new Date();
+
+  const startOfYear = new Date(now.getFullYear(), 0, 0);
+  const diff = now - startOfYear;
+
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+
+  const now1 = new Date();
+  const dayNumber = now1.getDay() === 0 ? 7 : now1.getDay();
+
+  const dayOfWeek = now.toLocaleDateString("en-US", {
+    weekday: "long",
+  });
+
+  const startOfYear1 = new Date(now.getFullYear(), 0, 1);
+  const pastDaysOfYear = (now - startOfYear1) / 86400000;
+
+  const weekNumber = Math.ceil(
+    (pastDaysOfYear + startOfYear1.getDay() + 1) / 7,
+  );
 
   return (
     <>
@@ -291,8 +445,31 @@ function SecondDiv() {
       <WhiteDiv
         style={{
           display: display ? "none" : "flex",
+          background: Divcolor,
+          color: Textcolor,
         }}
-      ></WhiteDiv>
+      >
+        <LeftDiv>
+          <CurrentDiv>
+            <Header>CURRENT TIMEZONE</Header>
+            <Content>{timezone}</Content>
+          </CurrentDiv>
+          <DayDiv>
+            <Header>Day of the year</Header>
+            <Content>{dayOfYear}</Content>
+          </DayDiv>
+        </LeftDiv>
+        <RightDiv>
+          <WeekDiv>
+            <Header>Day of the week</Header>
+            <Content>{dayNumber}</Content>
+          </WeekDiv>
+          <WeekNumDiv>
+            <Header>Week number</Header>
+            <Content>{weekNumber}</Content>
+          </WeekNumDiv>
+        </RightDiv>
+      </WhiteDiv>
     </>
   );
 }
