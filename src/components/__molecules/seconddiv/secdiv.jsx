@@ -242,6 +242,9 @@ function SecondDiv() {
     setDisplay(!display);
   };
 
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const city = timeZone.split("/")[1]?.replace("_", " ") || "Unknown";
+
   return (
     <>
       <SecDiv
@@ -268,7 +271,7 @@ function SecondDiv() {
               <HelloTxt>GOOD {greeting}, IT’S CURRENTLY</HelloTxt>
             </HelloDiv>
             <Hour>{time}</Hour>
-            <Location>In Tbilisi, Ge</Location>
+            <Location>In {city}</Location>
           </Flex>
 
           <MoreDiv onClick={handleClick}>

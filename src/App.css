@@ -11,4 +11,5 @@ body {
   align-items: start;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
+  overflow: hidden;
 }
