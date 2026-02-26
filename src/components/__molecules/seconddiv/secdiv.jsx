@@ -208,7 +208,7 @@ const WhiteDiv = styled.div`
   border-radius: 10px;
 
   @media (max-width: 500px) {
-    height: 500px;
+    height: 100%-55%;
   }
 `;
 
