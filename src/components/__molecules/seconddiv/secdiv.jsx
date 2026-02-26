@@ -4,7 +4,7 @@ import Sun from "../../../assets/sun.png";
 import Moon from "../../../assets/Moon.png";
 import Night from "../../../assets/Nightimg.png";
 import Arrow from "../../../assets/arrow.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SecDiv = styled.div`
   width: 100vw;
@@ -334,6 +334,16 @@ const WeekNumDiv = styled.div`
 `;
 
 function SecondDiv() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const time = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -379,21 +389,21 @@ function SecondDiv() {
 
   const now = new Date();
 
-  const startOfYear = new Date(now.getFullYear(), 0, 0);
+  const startOfYear = new Date(currentTime.getFullYear(), 0, 0);
   const diff = now - startOfYear;
 
   const oneDay = 1000 * 60 * 60 * 24;
   const dayOfYear = Math.floor(diff / oneDay);
 
   const now1 = new Date();
-  const dayNumber = now1.getDay() === 0 ? 7 : now1.getDay();
+  const dayNumber = currentTime.getDay() === 0 ? 7 : currentTime.getDay();
 
-  const dayOfWeek = now.toLocaleDateString("en-US", {
+  const dayOfWeek = currentTime.toLocaleDateString("en-US", {
     weekday: "long",
   });
 
-  const startOfYear1 = new Date(now.getFullYear(), 0, 1);
-  const pastDaysOfYear = (now - startOfYear1) / 86400000;
+  const startOfYear1 = new Date(currentTime.getFullYear(), 0, 1);
+  const pastDaysOfYear = (currentTime - startOfYear1) / 86400000;
 
   const weekNumber = Math.ceil(
     (pastDaysOfYear + startOfYear1.getDay() + 1) / 7,
